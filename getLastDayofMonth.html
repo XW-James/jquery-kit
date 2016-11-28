@@ -1,0 +1,36 @@
+<!DOCTYPE html> 
+<!-- 
+To change this license header, choose License Headers in Project Properties. 
+To change this template file, choose Tools | Templates 
+and open the template in the editor. 
+-->
+<html> 
+<head> 
+<title>JavaScript获取某年某月的最后一天</title> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width"> 
+<script type="text/javascript"> 
+/** 
+* 获取某年某月的最后一天 
+*/ 
+function getLastDayOfMonth(year,month) 
+{ 
+//获取本年本月的第一天日期 
+var date = new Date(year,month-1,'01'); 
+//设置日期 
+date.setDate(1); 
+//设置月份 
+date.setMonth(date.getMonth() + 1); 
+//获取本月的最后一天 
+cdate = new Date(date.getTime() - 1000*60*60*24); 
+//打印某年某月的最后一天 
+alert(cdate.getFullYear()+"年"+(Number(cdate.getMonth())+1)+"月最后一天的日期:"+cdate.getDate()+"日"); 
+//返回结果 
+return cdate.getDate(); 
+} 
+</script> 
+</head> 
+<body> 
+<input type="button" value="获取某年某月的最后一天" onclick="getLastDayOfMonth(2014,6)"/> 
+</body> 
+</html>
