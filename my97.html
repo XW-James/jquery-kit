@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>97data</title>
+	<script language="javascript" type="text/javascript" src="My97DatePickerBeta/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- http://lipeng200819861126-126-com.iteye.com/blog/2069322   季度-->
+	<input id="d11" type="text" onClick="WdatePicker()"/>
+
+	<input type="text" id="jb" value="${timer}" style="clear:both"  onclick="WdatePicker({dateFmt:'yyyy年M季度', isQuarter:true, isShowOK:false,disabledDates:['....-0[5-9]-..','....-1[0-2]-..'], startDate:'%y-01-01' ,errDealMode:2})"  readonly="true" />
+
+
+    <input id="zb" value="${timer}"  type="text" onfocus="WdatePicker({isShowWeek:true,onpicked:function funccc(){
+		if($dp.cal.getP('y')=='2016'&&$dp.cal.getP('W','WW')=='53'){
+          $dp.$('zb').value=($dp.cal.getP('y')-1)+'年，第'+$dp.cal.getP('W','WW')+'周'
+		}else{
+          $dp.$('zb').value=$dp.cal.getP('y')+'年，第'+$dp.cal.getP('W','WW')+'周'
+		}
+      },errDealMode:-1,skin:'whyGreen'})"/>
+
+      <div>
+      	年<input id="d1212" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy年'})"/>
+
+      	季度<input id="d1213" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy年MM季度',disabledDates:['....-0[5-9]-..','....-1[0-2]-..'],startDate:'%y-01-01'})"/>
+
+      	月<input id="d1214" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy年MM月'})"/>
+
+      	周<input id="d1215" class="Wdate" type="text" onfocus="WdatePicker({isShowWeek:true,onpicked:funccc,errDealMode:3})"/>
+
+      	日<input id="d1216" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy年MM月dd日'})"/>
+ 
+      </div>
+      <script>
+      function funccc(){
+		$dp.$('d1215').value=$dp.cal.getP('y')+$dp.cal.getP('W','WW');
+		 
+		}
+      </script>
+</body>
+</html>
