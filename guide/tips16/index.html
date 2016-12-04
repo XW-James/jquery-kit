@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>实用jQuery新手指引流程引导插件Intro.Js - JS代码网</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="css/introjs.min.css">
+<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+#all {
+	width: 1000px;
+	text-align: center;
+	margin: 100px auto;
+}
+
+input {
+	border: 1px solid #ccc;
+	padding:5px 10px;
+	cursor:pointer;
+}
+ul {
+	list-style-type: none;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.clear {
+	clear: both;
+}
+.text {
+	font-size: 12px;
+	color: #999;
+}
+.modal-content {
+	background-color: #fff;
+	padding: 10px;
+}
+.line-bottom {
+	border-bottom: 1px solid #E5E5E5;
+	padding-bottom: 10px;
+}
+.pt10 {
+	padding-top: 10px;
+}
+h4 {
+	padding: 0;
+	margin: 0;
+}
+.mydiv {
+	height: 300px;
+	margin: 50px;
+	padding: 15px;
+	line-height:300px;
+}
+</style>
+</head>
+<body>
+<div id="all">
+    <input type="button" id="btnStart" value="开始演示"/>
+    <div data-intro="这是最后" data-step="6" class="mydiv" style="background-color: #999;"> 这里是最后的 </div>
+    <div>
+      <div data-intro="这是第一步" data-step="1" class="mydiv fl" style="background-color: #aaa;">这里是第一</div>
+      <div data-intro="这是第三步" data-step="3"  class="mydiv fl" style="background-color: #666;">这里是第三</div>
+      <div data-intro="这是第四步" data-step="4"  class="mydiv fl" style="background-color: #aaa;">这里是第四</div>
+      <div data-intro="这是第五步" data-step="5"  class="mydiv fl" style="background-color: #666;">这里是第五</div>
+    </div>
+    <div data-intro="这是第二步" data-step="2" class="mydiv clear" style="background-color: #aaa;"> 这里是第二 </div>
+</div>
+<script src="js/jquery.min.js"></script> 
+<script src="js/intro.min.js" type="text/javascript" charset="utf-8"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#btnStart").click(function(){
+		introJs().setOptions({
+			nextLabel: '下一步 &rarr;',
+			prevLabel: '&larr; 上一步',
+			skipLabel: '跳过',
+			doneLabel: "完成",
+			exitOnOverlayClick:true,
+			exitOnEsc: true,
+			showBullets:true
+		}).start();
+	});
+});
+</script>
+</body>
+</html>

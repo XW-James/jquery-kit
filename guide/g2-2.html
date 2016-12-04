@@ -1,0 +1,131 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>高亮区域提示效果1</title>
+<style type="text/css">
+*{ margin:0; padding:0}
+.guideA{ height:200px; width:200px; background-color:#CDCDCD; margin:100px 0 0 100px}
+.guideC{ height:200px; width:200px;  margin:200px 0 0 200px}
+.guideB{ height:200px; width:200px;  margin:500px 0 0 600px;}
+.guideD{ height:500px; width:500px;  margin:50px 0 0 400px;}
+.mask-class{position:absolute;opacity: 0.6;-ms-filter: "alpha(opacity=60)"; /* IE 8 */ filter: alpha(opacity=60); border-color:#000000; border-style:solid;}
+</style>
+<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+</head>
+
+<body>
+<div id="guideA" class="guideA">高亮区域1</div>
+<div id="guideB" class="guideB">高亮区域2</div>
+<div id="guideC" class="guideC">高亮区域3</div>
+<div id="guideD" class="guideD">高亮区域4</div>
+<div id="divText"><input type="button" value="prev" id="prev"/> <input type="button" value="next" id="next"/>  <input type="button" value="close" id="close"/>
+<p></p></div>
+<script type="text/javascript">
+var UGuide={
+	index:0,
+	guideList:{data:[
+		{text:"这是第一步，呵呵!",dependID:"guideA",seat:"right"},
+		{text:"这是第二步，哈哈!",dependID:"guideB",seat:"left"},
+		{text:"这是第三步，嘎嘎!",dependID:"guideC",seat:"top"},
+		{text:"这是第四步，嘎嘎!",dependID:"guideD",seat:"bottom"}
+	]},
+	hotDiv:function(dependObj){
+		var obj=$("#"+dependObj.dependID);
+		var objXY=obj.offset();
+		var _divb = $('#divGuideMask');
+		_divb.css({"top":objXY.top-2,"left":objXY.left-2,"width":obj.width(),"height":obj.height()})
+		return _divb;
+	},
+	sMask:function(dependObj){
+		var _divb=this.hotDiv(dependObj);
+		//alert(_divb.offset().top);
+		var MasDiv=$("#MasDiv");
+		var textDiv=$("#divText");
+		$("#divText p").empty().append(dependObj.text);
+		if (dependObj.seat == "right") {
+           textDiv.css({
+		   		"top":_divb.offset().top,
+				"left":_divb.offset().left+_divb.outerWidth()+10
+		   })
+        } else if (dependObj.seat == "left") {
+           textDiv.css({
+		   		"top":_divb.offset().top,
+				"left":_divb.offset().left-textDiv.outerWidth()-10
+		   })
+        } else if (dependObj.seat == "top") {
+            textDiv.css({
+		   		"top":_divb.offset().top-textDiv.outerHeight()-10,
+				"left":_divb.offset().left
+		   })
+        } else if (dependObj.seat == "bottom") {
+             textDiv.css({
+		   		"top":_divb.offset().top+_divb.outerHeight()+10,
+				"left":_divb.offset().left
+		   })
+        }
+        
+		MasDiv.css({
+			"top":0,
+			"left":0,
+			"height":_divb.innerHeight(),
+			"width":_divb.innerWidth(),
+			"background-color":"#FF3300",
+			"border-top-width":_divb.offset().top,
+			"border-left-width":_divb.offset().left,
+			"border-right-width":$().width()-_divb.offset().left-_divb.innerWidth(),
+			"border-bottom-width":$().height()-_divb.offset().top-_divb.innerHeight()
+		});
+		//alert(_divb.offset().top);
+	},
+	show:function(_index){
+		var objDate=this.guideList.data[_index]
+		if(!$('#divGuideMask')[0]){
+			$("<div class='mask-class'></div>").attr("id","MasDiv").insertBefore("#divText");
+			$("<div></div>").attr("id","divGuideMask").css({
+				"position": "absolute",
+				"border":"2px solid #FF3300"
+			}).insertBefore("#divText");
+			$("#divText").css({
+				"position": "absolute",
+				"border":"1px solid #FF3300",
+				"width":"200px"
+			});
+		}
+		this.hotDiv(objDate);
+		this.sMask(objDate);
+	},
+	next: function() {
+        this.index++;
+        if (this.index >= this.guideList.data.length) {
+            this.index = this.guideList.data.length - 1;
+            return;
+        }
+        this.show(this.index);
+    },
+	prev: function() {
+        this.index--;
+        if (this.index < 0) {
+            this.index = 0;
+        }
+        this.show(this.index);
+    },
+	close:function(){
+		$("#MasDiv,#divText").fadeOut();
+	}
+};
+
+UGuide.show(0);
+$("#next").click(function(){
+	UGuide.next();
+});
+$("#prev").click(function(){
+	UGuide.prev();
+});
+$("#close").click(function(){
+	UGuide.close();
+});
+</script>
+</body>
+</html>
